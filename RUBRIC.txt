@@ -1,0 +1,87 @@
+================================================================
+GRADING RUBRIC -- Lab: Inheritance in C++
+Total: 100 points
+================================================================
+
+Run each section independently:
+  make section S=A
+  make section S=B
+  make section S=C
+  make section S=D
+  make section S=E
+
+----------------------------------------------------------------
+SECTION [A] -- Vehicle Base Class & Getters          20 pts
+----------------------------------------------------------------
+  A1  getMake() returns correct value (Car)           3 pts
+  A2  getYear() returns correct value (Car)           3 pts
+  A3  getFuelLevel() returns correct value (Car)      4 pts
+  A4  getMake() via Truck                             3 pts
+  A5  getYear() via Truck                             3 pts
+  A6  getFuelLevel() via Truck                        4 pts
+
+----------------------------------------------------------------
+SECTION [B] -- Vehicle::refuel Logic                 15 pts
+----------------------------------------------------------------
+  B1  Normal refuel adds correctly                    3 pts
+  B2  Overflow clamps at 100.0                        3 pts
+  B3  Amount of 0 has no effect                       3 pts
+  B4  Negative amount has no effect                   3 pts
+  B5  Refuel to exactly 100 stays at 100              2 pts
+  B6  refuel works on Truck object                    1 pt
+
+----------------------------------------------------------------
+SECTION [C] -- Car Constructor & describe()          20 pts
+----------------------------------------------------------------
+  C1  getNumDoors() basic (4 doors)                   4 pts
+  C2  getNumDoors() alternative (2 doors)             2 pts
+  C3  describe() contains make                        3 pts
+  C4  describe() contains year                        3 pts
+  C5  describe() contains door count                  3 pts
+  C6  describe() contains fuel level                  2 pts
+  C7  describe() full format check                    3 pts
+
+----------------------------------------------------------------
+SECTION [D] -- Truck Constructor & describe()        20 pts
+----------------------------------------------------------------
+  D1  getPayloadTons() basic (5.5t)                   4 pts
+  D2  getPayloadTons() large value (20t)              2 pts
+  D3  describe() contains make                        3 pts
+  D4  describe() contains year                        3 pts
+  D5  describe() contains payload value               3 pts
+  D6  describe() contains fuel level                  2 pts
+  D7  describe() full format check                    3 pts
+
+----------------------------------------------------------------
+SECTION [E] -- Polymorphism via Base Pointer         25 pts
+----------------------------------------------------------------
+  E1  Vehicle* to Car dispatches Car::describe()      5 pts
+  E2  Vehicle* to Truck dispatches Truck::describe()  5 pts
+  E3  refuel() via Vehicle* updates Car correctly     5 pts
+  E4  refuel() clamp via Vehicle* on Truck            5 pts
+  E5  Two pointers dispatch independently             3 pts
+  E6  No data cross-contamination between types       2 pts
+
+================================================================
+DEDUCTIONS (applied after section scores)
+================================================================
+  Code does not compile at all        : -20 pts
+  .h / header files created           : -10 pts
+  Multiple .cpp files used            : -10 pts
+  describe() returns empty string     :  -5 pts per class
+  Hardcoded output (not using members):  -10 pts
+
+================================================================
+PARTIAL GRADING GUIDE
+================================================================
+  Sections [A] and [B] assess the base class only.
+  Award these even if Car/Truck describe() is incomplete.
+
+  Section [C] and [D] are independent.
+  A student can pass [C] without passing [D] and vice versa.
+
+  Section [E] requires [C] and [D] to be mostly working.
+  Award partial points in [E] if polymorphism is partially set up
+  (e.g. virtual keyword present but describe() format wrong).
+
+================================================================

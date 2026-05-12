@@ -1,0 +1,105 @@
+================================================================
+QUICK REVISION SHEET -- Inheritance in C++
+================================================================
+
+CORE IDEA
+---------
+Inheritance lets one class (derived) reuse and extend another
+class (base). The derived class gets all public/protected members
+of the base automatically.
+
+  Car IS-A Vehicle      <-- valid "is-a" => use inheritance
+  Car HAS-A Engine      <-- "has-a" => use a member variable
+
+WHY IT MATTERS
+--------------
+- Avoid repeating common data (make, year, fuelLevel live once)
+- Model real-world hierarchies cleanly
+- Enable polymorphism: one pointer type, many behaviors
+
+
+KEY SYNTAX AT A GLANCE
+-----------------------
+
+  // Base class
+  class Vehicle {
+  protected:
+      std::string make;   // accessible in derived classes
+      int year;
+  public:
+      Vehicle(std::string m, int y) : make(m), year(y) {}
+      virtual std::string describe() const = 0;  // pure virtual
+      virtual ~Vehicle() = default;              // always add!
+  };
+
+  // Derived class
+  class Car : public Vehicle {
+  private:
+      int doors;
+  public:
+      // Chain to base constructor via initialiser list
+      Car(std::string m, int y, int d) : Vehicle(m, y), doors(d) {}
+
+      std::string describe() const override {
+          return "Car: " + make + ", " + std::to_string(doors) + "d";
+      }
+  };
+
+
+KEY RULES (memorise these)
+--------------------------
+1. Use  : public Base  for "is-a" inheritance.
+2. Call base constructor in initialiser list:
+     Car(...) : Vehicle(make, year), doors(d) {}
+3. Mark base methods  virtual  to enable overriding.
+4. Add  = 0  for pure virtual (forces derived to implement it).
+5. Always add  virtual ~Vehicle() = default;  to base class.
+6. Use  override  in derived -- catches typo bugs at compile time.
+
+
+PROTECTED vs PRIVATE
+--------------------
+  protected  --> accessible inside the class AND derived classes
+  private    --> NOT accessible in derived classes (use getters)
+
+
+PURE VIRTUAL (= 0) QUICK FACTS
+--------------------------------
+  virtual std::string describe() const = 0;
+
+  - Vehicle becomes ABSTRACT (cannot create Vehicle objects)
+  - Every derived class MUST implement describe()
+  - Forgetting = 0 means Vehicle is not abstract (usually a bug)
+
+
+POLYMORPHISM IN 3 LINES
+------------------------
+  Car c("Toyota", 2020, 4);
+  Vehicle* v = &c;          // base pointer to derived object
+  v->describe();            // calls Car::describe() at runtime!
+  
+  This ONLY works because describe() is virtual.
+
+
+OSTRINGSTREAM FOR describe()
+-----------------------------
+  #include <sstream>
+
+  std::string describe() const {
+      std::ostringstream oss;
+      oss << "Car: " << make << " (" << year << "), "
+          << doors << " doors, fuel: " << fuelLevel << "%";
+      return oss.str();
+  }
+
+
+QUICK CHECKLIST BEFORE YOU START CODING
+-----------------------------------------
+[ ] Vehicle has: protected data members?
+[ ] Vehicle has: virtual describe() = 0 ?
+[ ] Vehicle has: virtual ~Vehicle() = default ?
+[ ] Car/Truck constructors chain to Vehicle in initialiser list?
+[ ] Car/Truck describe() has the  override  keyword?
+[ ] refuel() ignores zero/negative AND clamps at 100?
+
+================================================================
